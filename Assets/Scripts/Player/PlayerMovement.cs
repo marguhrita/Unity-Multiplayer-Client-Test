@@ -37,12 +37,18 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+    private Player player;
 
     private void Start()
     {
+        if (player == null)
+        {
+            player = GetComponent<Player>();
+        }
+
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
         readyToJump = true;
     }
 
@@ -127,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Message message = Message.Create(MessageSendMode.unreliable, ClientToServerId.playerPosition);
 
+        message.AddUShort(player.id);
         message.AddVector3(transform.position);
 
         Singleton.Client.Send(message);
