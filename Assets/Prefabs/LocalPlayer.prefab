@@ -255,7 +255,7 @@ MonoBehaviour:
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   orientation: {fileID: 7550535787848369667}
 --- !u!54 &4114294738042021840
 Rigidbody:

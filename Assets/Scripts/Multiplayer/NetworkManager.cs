@@ -9,6 +9,7 @@ public class NetworkManager : MonoBehaviour
     public enum ServerToClientId : ushort
     {
         playerSpawned = 1,
+        playerPositions,
     }
     public enum ClientToServerId : ushort
     {

@@ -12,10 +12,14 @@ public class Player : MonoBehaviour
 
     private string username;
 
+
+
     private void OnDestroy()
     {
         list.Remove(id);
     }
+
+    
 
     //spawns the player
     public static void Spawn(ushort id, string username, Vector3 position)
@@ -39,10 +43,24 @@ public class Player : MonoBehaviour
         list.Add(id, player);
     }
 
+    private void movePlayer(Vector3 position)
+    {
+        transform.position = position;
+    }
+
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void spawnPlayer(Message message)
     {
         Spawn(message.GetUShort(), message.GetString(), message.GetVector3());
     }
+
+    [MessageHandler((ushort)ServerToClientId.playerPositions)]
+    private static void updateOtherPlayerPositions(Message message)
+    {
+        Player player = list[message.GetUShort()];
+
+        player.movePlayer(message.GetVector3());
+    }
+    
 
 }
