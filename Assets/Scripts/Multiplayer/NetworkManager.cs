@@ -46,6 +46,11 @@ public class NetworkManager : MonoBehaviour
         Singleton = this;
     }
 
+    public void setIp(string ip)
+    {
+        this.ip = ip;
+    }
+
     private void Start()
     {
         RiptideLogger.Initialize(Debug.Log, Debug.Log, Debug.LogWarning, Debug.LogError, false); //sends riptide error messages to unity
@@ -71,6 +76,7 @@ public class NetworkManager : MonoBehaviour
 
     public void Connect()
     {
+        Debug.Log($"Connecting to {ip}");
         Client.Connect($"{ip}:{port}");
 
     }

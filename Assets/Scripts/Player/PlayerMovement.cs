@@ -136,6 +136,8 @@ public class PlayerMovement : MonoBehaviour
         message.AddUShort(player.id);
         message.AddVector3(transform.position);
 
+        
+
         Singleton.Client.Send(message);
 
 
