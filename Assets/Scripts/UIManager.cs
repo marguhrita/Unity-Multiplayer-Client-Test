@@ -25,21 +25,29 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    [Header("Connect")]
-    [SerializeField] private GameObject connectUI;
-    [SerializeField] private TMP_InputField usernameField;
-    [SerializeField] private TMP_InputField inputIP;
-
     private void Awake()
     {
         Singleton = this;
     }
 
+
+    [SerializeField] private GameObject connectUI; //menu canvas
+
+    [Header("Connect")]
+    [SerializeField] private TMP_InputField usernameField;
+    [SerializeField] private TMP_InputField inputIP;
+
+    [Header("Pause")]
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Button resume;
+    [SerializeField] private Button leave;
+
+
+    #region startmenu
     public void ConnectClicked()
     {
-        usernameField.interactable = false;
-        inputIP.interactable = false;
-        connectUI.SetActive(false);
+
+        setInactive();
 
         if (inputIP.text.Length > 0)
         {
@@ -50,9 +58,20 @@ public class UIManager : MonoBehaviour
         NetworkManager.Singleton.Connect();
     }
 
+    private void setInactive()
+    {
+
+        usernameField.interactable = false;
+        inputIP.interactable = false;
+        connectUI.SetActive(false);
+
+
+    }
+
     public void backToMain()
     {
         usernameField.interactable = true;
+        inputIP.interactable = true;
         connectUI.SetActive(true);
     }
 
@@ -64,4 +83,25 @@ public class UIManager : MonoBehaviour
 
         NetworkManager.Singleton.Client.Send(message);
     }
+
+    #endregion
+
+    #region pausemenu
+
+    private void showPauseMenu()
+    {
+        pauseMenu.SetActive(true);
+
+    }
+    
+    private void hidePauseMenu()
+    {
+        pauseMenu.SetActive(false);
+    }
+
+
+
+
+    #endregion
+
 }

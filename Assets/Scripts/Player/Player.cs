@@ -29,8 +29,6 @@ public class Player : MonoBehaviour
         {
             player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.isLocal = true;
-            
-
         }
         else
         {
@@ -50,7 +48,6 @@ public class Player : MonoBehaviour
         {
             transform.position = position;
         }
-        
     }
 
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
@@ -59,12 +56,13 @@ public class Player : MonoBehaviour
         Spawn(message.GetUShort(), message.GetString(), message.GetVector3());
     }
 
+
     [MessageHandler((ushort)ServerToClientId.playerPositions)]
     private static void updateOtherPlayerPositions(Message message)
     {
+
         Player player = list[message.GetUShort()];
 
-        Debug.Log("Player recieved");
 
         player.movePlayer(message.GetVector3());
     }

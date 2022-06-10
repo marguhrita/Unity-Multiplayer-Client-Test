@@ -8,26 +8,21 @@ using static NetworkManager;
 
 public class PlayerMovement : MonoBehaviour
 {
+    
     [Header("Movement")]
     public float moveSpeed;
-
-    public float groundDrag;
-
-    public float jumpForce;
-    public float jumpCooldown;
-    public float airMultiplier;
-    bool readyToJump;
-
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
-
-    [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
 
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    bool grounded; 
+    public float groundDrag;
+
+    [Header("Jumping")]
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    public bool readyToJump = true;
 
     public Transform orientation;
 
@@ -37,107 +32,104 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+
     private Player player;
 
-    private void Start()
+
+    void Start()
     {
-        if (player == null)
-        {
-            player = GetComponent<Player>();
-        }
-
-
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        readyToJump = true;
+
+        player = GetComponent<Player>();
     }
 
     private void Update()
     {
-        // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+        myInput();
 
-        MyInput();
-        SpeedControl();
+        //raycast to check if player is grounded
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        // handle drag
         if (grounded)
+        {
+            Debug.Log(grounded);
             rb.drag = groundDrag;
+        }
         else
+        {
             rb.drag = 0;
+        }
     }
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        movePlayer();
         sendPosition();
     }
 
-    private void MyInput()
+    void myInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(KeyCode.Space) && readyToJump && grounded)
         {
             readyToJump = false;
 
             Jump();
 
-            Invoke(nameof(ResetJump), jumpCooldown);
+            Invoke(nameof(resetJump), jumpCooldown);
         }
+
     }
 
-    private void MovePlayer()
+    private void movePlayer()
     {
-        // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        // on ground
         if (grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-
-        // in air
-        else if (!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10, ForceMode.Force);
+        }
+        else
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10 * airMultiplier, ForceMode.Force);
+        }
+        
     }
 
-    private void SpeedControl()
+    private void speedControl()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        // limit velocity if needed
-        if (flatVel.magnitude > moveSpeed)
-        {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-        }
+        //limit velocity
+        Vector3 limitedVel = flatVel.normalized * moveSpeed;
+        rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
     }
 
     private void Jump()
     {
-        // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
-    private void ResetJump()
+
+    private void resetJump()
     {
         readyToJump = true;
     }
-
+  
     #region messages
 
     private void sendPosition()
     {
         Message message = Message.Create(MessageSendMode.unreliable, ClientToServerId.playerPosition);
 
+       // Debug.Log("Sending positions " + transform.position);
+
         message.AddUShort(player.id);
         message.AddVector3(transform.position);
-
-        
-
         Singleton.Client.Send(message);
 
 
