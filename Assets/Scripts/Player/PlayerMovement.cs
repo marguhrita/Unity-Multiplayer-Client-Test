@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (grounded)
         {
-            Debug.Log(grounded);
+            //Debug.Log(grounded);
             rb.drag = groundDrag;
         }
         else
