@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8944225440475744341}
   - component: {fileID: 5498138830164016956}
+  - component: {fileID: 1498974061944886982}
   - component: {fileID: 5171910115050371924}
   - component: {fileID: 2826350766760239112}
-  - component: {fileID: 4814487250375374000}
-  - component: {fileID: 8648372732432101418}
+  - component: {fileID: 7956785230069224382}
   m_Layer: 0
   m_Name: Dummy
   m_TagString: Untagged
@@ -44,6 +44,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2090650091161553916}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1498974061944886982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090650091161553916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca172a0fb4ab526499e9aa2e5842dfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  speed: 0
 --- !u!23 &5171910115050371924
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -100,7 +114,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4814487250375374000
+--- !u!114 &7956785230069224382
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,20 +123,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 2090650091161553916}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca172a0fb4ab526499e9aa2e5842dfcb, type: 3}
+  m_Script: {fileID: 11500000, guid: 04417b1d98ad5044ca39d3ff60bcd73e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
---- !u!114 &8648372732432101418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2090650091161553916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca172a0fb4ab526499e9aa2e5842dfcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
+  isLocal: 0
+  target: {fileID: 0}

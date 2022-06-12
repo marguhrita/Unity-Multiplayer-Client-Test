@@ -36,11 +36,11 @@ public class ShootGun : MonoBehaviour
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit)) //Performs raycast on camera direction and outputs to "hit"
         {
 
-            Dummy dummy = hit.transform.GetComponent<Dummy>();
+            Target target = hit.transform.GetComponent<Target>();
 
-            if (dummy != null)
+            if (target != null)
             {
-                dummy.takeDamage(damage);
+                target.takeDamage(damage);
             }
 
         }

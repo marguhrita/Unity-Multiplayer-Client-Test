@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Dummy : Target
 {
-       
+    private void Awake()
+    {
+        health = 100f;
+    }
 }

@@ -11,8 +11,13 @@ public class Player : MonoBehaviour
     public bool isLocal;
 
     private string username;
+    [SerializeField] private Target target;
 
 
+    private void Awake()
+    {
+        target = GetComponent<Target>();
+    }
 
     private void OnDestroy()
     {
@@ -50,7 +55,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+    private void killPlayer()
+    {
+        Debug.Log("You died");
+    }
+
+
+    #region messages
+
 
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void spawnPlayer(Message message)
@@ -69,6 +81,24 @@ public class Player : MonoBehaviour
         player.movePlayer(message.GetVector3());
     }
 
-    
+
+    [MessageHandler((ushort)ServerToClientId.playerHealth)]
+    private static void takeDamage(Message message)
+    {
+
+        Player player = list[message.GetUShort()];
+
+
+        player.target.takeDamage(message.GetFloat());
+
+        if (player.target.health < 0)
+        {
+            player.killPlayer();
+        }
+
+    }
+
+
+    #endregion
 
 }

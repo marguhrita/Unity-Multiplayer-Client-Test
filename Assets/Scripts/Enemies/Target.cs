@@ -7,12 +7,12 @@ public abstract class Target : MonoBehaviour
 {
 
     [Header("Stats")]
-    [SerializeField] protected float health = 100f;
-    [SerializeField] protected float speed = 0f;
+    [SerializeField] public float health;
+    [SerializeField] protected float speed;
 
     private Player player;
 
-    private void Awake()
+    protected virtual void Start()
     {
         player = GetComponent<Player>();
     }
@@ -23,26 +23,16 @@ public abstract class Target : MonoBehaviour
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.damage);
 
 
+        Debug.Log(player.id);
+
         message.AddUShort(player.id);
+
         message.AddFloat(damage);
 
         Singleton.Client.Send(message);
 
     }
 
-    [MessageHandler((ushort)ServerToClientId.playerHealth)]
-    private void takeDamage(Message message)
-    {
-        if (player.id == message.GetUShort())
-        {
-            health -= message.GetFloat();
-        }
-
-        if (health < 0)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     
 }
