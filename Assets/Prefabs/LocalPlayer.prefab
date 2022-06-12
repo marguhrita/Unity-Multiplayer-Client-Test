@@ -242,7 +242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6081205169731456759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -280,6 +280,7 @@ MonoBehaviour:
   cam: {fileID: 3163258752629875049}
   damage: 10
   fireRate: 10
+  cooldown: 1
 --- !u!114 &6938073433587851916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +301,7 @@ MonoBehaviour:
   groundDrag: 3
   jumpForce: 7
   jumpCooldown: 1
-  airMultiplier: 0.5
+  airMultiplier: 0.25
   readyToJump: 1
   orientation: {fileID: 6346407301173800964}
 --- !u!54 &4114294738042021840

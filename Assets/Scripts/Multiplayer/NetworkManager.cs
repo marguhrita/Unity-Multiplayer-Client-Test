@@ -10,11 +10,16 @@ public class NetworkManager : MonoBehaviour
     {
         playerSpawned = 1,
         playerPositions,
+        damage,
+        playerHealth,
+        playerDeath,
+        killfeed,
     }
     public enum ClientToServerId : ushort
     {
         name = 1,
         playerPosition,
+        damage,
     }
 
     private static NetworkManager _singleton;
@@ -83,7 +88,8 @@ public class NetworkManager : MonoBehaviour
 
     private void DidConnect(object sender, EventArgs e)
     {
-        UIManager.Singleton.SendName();
+        ///UIManager.Singleton.SendName();
+        MainMenuManager.Singleton.SendName();
     }
 
     private void FailedToConnect(object sender, EventArgs e)

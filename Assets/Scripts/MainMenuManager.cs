@@ -3,10 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using RiptideNetworking;
+using static NetworkManager;
 
 public class MainMenuManager : MonoBehaviour
 {
 
+    private static MainMenuManager _singleton;
+
+    public static MainMenuManager Singleton
+    {
+        get => _singleton;
+        private set
+        {
+            if (_singleton == null)
+                _singleton = value;
+            else if (_singleton != value)
+            {
+                Debug.Log($"{nameof(MainMenuManager)} instance already exists, destroying duplicate!");
+                Destroy(value);
+            }
+        }
+    }
+
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     [SerializeField] private GameObject startMenu;
     [SerializeField] private GameObject multiplayerMenu;
@@ -58,5 +81,15 @@ public class MainMenuManager : MonoBehaviour
     {
         startMenu.SetActive(true);
         multiplayerMenu.SetActive(false);
+    }
+
+    public void SendName()
+    {
+        Message message = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerId.name);
+
+        message.AddString(username.text);
+
+        Debug.Log("Sending name");
+        NetworkManager.Singleton.Client.Send(message);
     }
 }

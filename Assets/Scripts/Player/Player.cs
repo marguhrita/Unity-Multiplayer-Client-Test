@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    
+
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void spawnPlayer(Message message)
     {
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour
 
         player.movePlayer(message.GetVector3());
     }
+
     
 
 }
