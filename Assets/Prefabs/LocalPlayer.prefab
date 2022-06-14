@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 8275581708429041814}
   - component: {fileID: 3163258752629875049}
   - component: {fileID: 6874644530912069933}
-  - component: {fileID: 1591503978946579298}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -141,7 +140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3524763420930390805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.598, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -199,20 +198,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3524763420930390805}
   m_Enabled: 1
---- !u!114 &1591503978946579298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3524763420930390805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c02415bfe81ac241a3d7d46e5ab8d4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensitivity: 100
-  orientation: {fileID: 6346407301173800964}
 --- !u!1 &6081205169731456759
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,9 +212,10 @@ GameObject:
   - component: {fileID: 6938073433587851916}
   - component: {fileID: 4114294738042021840}
   - component: {fileID: 4360563558048234443}
+  - component: {fileID: 8220574921327707236}
   m_Layer: 0
   m_Name: LocalPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -265,6 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocal: 0
+  target: {fileID: 0}
+  cam: {fileID: 3163258752629875049}
 --- !u!114 &8459821057878367565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -277,10 +265,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9826709e2dda4d646abf8e0595b48172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1781771233485586921}
   cam: {fileID: 3163258752629875049}
   damage: 10
   fireRate: 10
-  cooldown: 1
+  cooldown: 0.1
+  BulletTrail: {fileID: 2152547122530672702, guid: e176e380e8b060e458b3e2739bb5884b, type: 3}
+  BulletSpawnPoint: {fileID: 8275581708429041814}
+  ImpactParticleSystem: {fileID: 3121400528888655713, guid: a0da67e18efc7274eb6027ee25f52b07, type: 3}
+  BulletSpeed: 100
 --- !u!114 &6938073433587851916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +297,7 @@ MonoBehaviour:
   airMultiplier: 0.25
   readyToJump: 1
   orientation: {fileID: 6346407301173800964}
+  cam: {fileID: 0}
 --- !u!54 &4114294738042021840
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -333,3 +327,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8220574921327707236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081205169731456759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c02415bfe81ac241a3d7d46e5ab8d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 100
+  orientation: {fileID: 6346407301173800964}
+  cam: {fileID: 3163258752629875049}

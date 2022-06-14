@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public bool readyToJump = true;
 
     public Transform orientation;
+    public Camera cam;
 
     float horizontalInput;
     float verticalInput;
@@ -130,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
 
         message.AddUShort(player.id);
         message.AddVector3(transform.position);
+        message.AddVector3(cam.transform.position);
         Singleton.Client.Send(message);
 
 

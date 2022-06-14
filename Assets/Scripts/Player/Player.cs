@@ -11,7 +11,10 @@ public class Player : MonoBehaviour
     public bool isLocal;
 
     private string username;
+
+
     [SerializeField] private Target target;
+    [SerializeField] private Camera cam;
 
 
     private void Awake()
@@ -24,13 +27,14 @@ public class Player : MonoBehaviour
         list.Remove(id);
     }
 
-    
+  
+
 
     //spawns the player
     public static void Spawn(ushort id, string username, Vector3 position)
     {
         Player player;
-        if (id == NetworkManager.Singleton.Client.Id) //checks if the player is local
+        if (id == Singleton.Client.Id) //checks if the player is local
         {
             player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.isLocal = true;
@@ -55,6 +59,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void changeCamRotation(Quaternion rotation)
+    {
+        if (!isLocal)
+        {
+            cam.transform.rotation = rotation;
+        }
+    }
+
     private void killPlayer()
     {
         Debug.Log("You died");
@@ -74,31 +86,34 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerPositions)]
     private static void updateOtherPlayerPositions(Message message)
     {
+        Debug.Log("Recieved player positons");
 
         Player player = list[message.GetUShort()];
-
-
+        
         player.movePlayer(message.GetVector3());
+        player.changeCamRotation(message.GetQuaternion());
     }
 
-
+    
     [MessageHandler((ushort)ServerToClientId.playerHealth)]
-    private static void takeDamage(Message message)
+    private static void playerHealthMessage(Message message)
     {
+
+        Debug.Log("Recieved player health");
+
 
         Player player = list[message.GetUShort()];
 
-
-        player.target.takeDamage(message.GetFloat());
+        player.target.health = message.GetFloat();
 
         if (player.target.health < 0)
         {
-            player.killPlayer();
+            Debug.Log($"Player with id:{player.id} died");
         }
-
     }
-
-
+    
     #endregion
+
+
 
 }

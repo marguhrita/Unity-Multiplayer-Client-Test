@@ -92,4 +92,9 @@ public class MainMenuManager : MonoBehaviour
         Debug.Log("Sending name");
         NetworkManager.Singleton.Client.Send(message);
     }
+
+    public void backToMain()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
 }

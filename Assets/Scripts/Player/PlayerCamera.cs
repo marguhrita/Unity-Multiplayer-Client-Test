@@ -6,18 +6,16 @@ public class PlayerCamera : MonoBehaviour
 {
 
     public float sensitivity;
-
     public Transform orientation;
 
+    [SerializeField] Camera cam;
 
     float xRotation;
     float yRotation;
 
     private void Start()
     {
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        disableCursor();
 
     }
 
@@ -33,9 +31,23 @@ public class PlayerCamera : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         //rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        cam.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
 
     }
+
+    public void disableCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void enableCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    
 
 }

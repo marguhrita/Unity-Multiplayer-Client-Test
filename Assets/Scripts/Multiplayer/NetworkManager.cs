@@ -10,8 +10,8 @@ public class NetworkManager : MonoBehaviour
     {
         playerSpawned = 1,
         playerPositions,
-        damage,
         playerHealth,
+        playerShot,
         playerDeath,
         killfeed,
     }
@@ -20,6 +20,7 @@ public class NetworkManager : MonoBehaviour
         name = 1,
         playerPosition,
         damage,
+        playerShot,
     }
 
     private static NetworkManager _singleton;
@@ -62,7 +63,7 @@ public class NetworkManager : MonoBehaviour
 
 
         Client = new Client(); // new client instance
-        Client.Connected += DidConnect; //subscribes 
+        Client.Connected += DidConnect; //subscribes "DidConnect" method to when the client connects
         Client.ConnectionFailed += FailedToConnect;
         Client.ClientDisconnected += playerLeft;
         Client.Disconnected += DidDisconnect;
@@ -94,7 +95,7 @@ public class NetworkManager : MonoBehaviour
 
     private void FailedToConnect(object sender, EventArgs e)
     {
-        UIManager.Singleton.backToMain();
+        MainMenuManager.Singleton.backToMain();
     }
 
     private void playerLeft(object sender, ClientDisconnectedEventArgs e)
@@ -104,7 +105,7 @@ public class NetworkManager : MonoBehaviour
 
     private void DidDisconnect(object sender, EventArgs e)
     {
-        UIManager.Singleton.backToMain();
+        MainMenuManager.Singleton.backToMain();
     }
 
 }

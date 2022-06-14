@@ -1,10 +1,6 @@
 
 using UnityEngine;
-using UnityEngine.UI;
-using RiptideNetworking;
-using RiptideNetworking.Utils;
-using static NetworkManager;
-using TMPro;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -30,77 +26,83 @@ public class UIManager : MonoBehaviour
         Singleton = this;
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            showPauseMenu();
+        }
+    }
 
-    [SerializeField] private GameObject connectUI; //menu canvas
-
-    [Header("Connect")]
-    [SerializeField] private TMP_InputField usernameField;
-    [SerializeField] private TMP_InputField inputIP;
+    private PlayerMovement playerMovement;
+    private PlayerCamera playerCamera;
 
     [Header("Pause")]
     [SerializeField] private GameObject pauseMenu;
-    [SerializeField] private Button resume;
-    [SerializeField] private Button leave;
 
+    [Header("Death")]
+    [SerializeField] private GameObject deathMenu;
 
-    #region startmenu
-    public void ConnectClicked()
+    private void Start()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        setInactive();
-
-        if (inputIP.text.Length > 0)
+        if (player != null)
         {
-            NetworkManager.Singleton.setIp(inputIP.text);
+            playerMovement = player.GetComponent<PlayerMovement>();
+            playerCamera = player.GetComponent<PlayerCamera>();
         }
-        
-
-        NetworkManager.Singleton.Connect();
     }
 
-    private void setInactive()
+
+    #region pausemenu
+
+
+
+
+    public void showPauseMenu()
     {
+        Debug.Log("Showing pause menu");
+        playerMovement.enabled = false;
+        playerCamera.enableCursor();
+        playerCamera.enabled = false;
+        pauseMenu.SetActive(true);
+        
+    }
 
-        usernameField.interactable = false;
-        inputIP.interactable = false;
-        connectUI.SetActive(false);
+    public void hidePauseMenu()
+    {
+        Debug.Log("hiding pause menu");
+        pauseMenu.SetActive(false);
+        playerMovement.enabled = true;
+        playerCamera.enabled = true;
+        playerCamera.disableCursor();
+    }
 
+    public void showDeathMenu()
+    {
+        Debug.Log("Showing death menu");
+        playerMovement.enabled = false;
+        playerCamera.enableCursor();
+        playerCamera.enabled = false;
+        deathMenu.SetActive(true);
+    }
 
+    public void hideDeathMenu()
+    {
+        Debug.Log("Hiding pause menu");
+        deathMenu.SetActive(false);
+        playerMovement.enabled = true;
+        playerCamera.enabled = true;
+        playerCamera.disableCursor();
     }
 
     public void backToMain()
     {
-        usernameField.interactable = true;
-        inputIP.interactable = true;
-        connectUI.SetActive(true);
+        MainMenuManager.Singleton.backToMain();
     }
 
-    public void SendName()
-    {
-        Message message = Message.Create(MessageSendMode.reliable, (ushort) ClientToServerId.name);
-
-        message.AddString(usernameField.text);
-
-        NetworkManager.Singleton.Client.Send(message);
-    }
-
-    #endregion
-
-    #region pausemenu
-
-    private void showPauseMenu()
-    {
-        pauseMenu.SetActive(true);
-
-    }
     
-    private void hidePauseMenu()
-    {
-        pauseMenu.SetActive(false);
-    }
-
-
-
 
     #endregion
 

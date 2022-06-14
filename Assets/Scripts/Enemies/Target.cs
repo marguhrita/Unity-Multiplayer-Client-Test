@@ -22,9 +22,6 @@ public abstract class Target : MonoBehaviour
         
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.damage);
 
-
-        Debug.Log(player.id);
-
         message.AddUShort(player.id);
 
         message.AddFloat(damage);
