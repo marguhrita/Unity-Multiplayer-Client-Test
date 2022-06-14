@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         target = GetComponent<Target>();
+        
     }
 
     private void OnDestroy()
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
         {
             player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, position, Quaternion.identity).GetComponent<Player>();
             player.isLocal = true;
+            UIManager.Singleton.loadPlayer(player.gameObject);
         }
         else
         {

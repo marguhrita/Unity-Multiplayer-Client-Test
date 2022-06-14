@@ -43,15 +43,19 @@ public class UIManager : MonoBehaviour
     [Header("Death")]
     [SerializeField] private GameObject deathMenu;
 
-    private void Start()
+    
+
+    public void loadPlayer(GameObject player)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        Debug.Log(player.transform);
 
         if (player != null)
         {
             playerMovement = player.GetComponent<PlayerMovement>();
             playerCamera = player.GetComponent<PlayerCamera>();
         }
+
     }
 
 

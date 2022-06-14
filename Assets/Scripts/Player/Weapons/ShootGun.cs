@@ -20,6 +20,7 @@ public class ShootGun : MonoBehaviour
     [SerializeField] private Transform BulletSpawnPoint;
     [SerializeField] private ParticleSystem ImpactParticleSystem;
     [SerializeField] private float BulletSpeed = 100;
+    
 
 
     private bool canShoot = true;
@@ -54,8 +55,9 @@ public class ShootGun : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit)) //Performs raycast on camera direction and outputs to "hit"
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit,1 << ~gameObject.layer)) //Performs raycast on camera direction and outputs to "hit"
         {
+
             damageTarget(hit);
 
             TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);

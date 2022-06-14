@@ -297,7 +297,7 @@ MonoBehaviour:
   airMultiplier: 0.25
   readyToJump: 1
   orientation: {fileID: 6346407301173800964}
-  cam: {fileID: 0}
+  cam: {fileID: 3163258752629875049}
 --- !u!54 &4114294738042021840
 Rigidbody:
   m_ObjectHideFlags: 0
