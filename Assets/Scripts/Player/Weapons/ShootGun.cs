@@ -19,7 +19,7 @@ public class ShootGun : MonoBehaviour
     [SerializeField] private TrailRenderer BulletTrail;
     [SerializeField] private Transform BulletSpawnPoint;
     [SerializeField] private ParticleSystem ImpactParticleSystem;
-    [SerializeField] private float BulletSpeed = 100;
+    [SerializeField] public float BulletSpeed = 100;
     
 
 
@@ -92,9 +92,14 @@ public class ShootGun : MonoBehaviour
 
     }
 
+    public TrailRenderer getTrail()
+    {
+        return Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
+    }
+
 
     //Magic code that creates a trail from the spawn position to the impact point
-    private IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact)
+    public IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact)
     {
         
         Vector3 startPosition = Trail.transform.position;
@@ -128,6 +133,7 @@ public class ShootGun : MonoBehaviour
         Message message = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerId.playerShot);
 
         message.AddUShort(player.id);
+
 
         Singleton.Client.Send(message);
     }

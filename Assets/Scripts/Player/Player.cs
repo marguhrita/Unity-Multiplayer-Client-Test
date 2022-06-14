@@ -15,11 +15,13 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Target target;
     [SerializeField] private Camera cam;
+    [SerializeField] private ShootGun gun;
 
 
     private void Awake()
     {
         target = GetComponent<Target>();
+        gun = GetComponent<ShootGun>();
         
     }
 
@@ -113,7 +115,18 @@ public class Player : MonoBehaviour
             Debug.Log($"Player with id:{player.id} died");
         }
     }
-    
+
+
+    [MessageHandler((ushort)ServerToClientId.playerShot)]
+    private static void recievePlayerShot(Message message)
+    {
+        Player player = list[message.GetUShort()];
+
+        Vector3 hit = message.GetVector3();
+
+        player.gun.SpawnTrail(player.gun.getTrail(), hit, hit.normalized, true);
+        Debug.Log("spawned other players gun trail");
+    }
     #endregion
 
 
