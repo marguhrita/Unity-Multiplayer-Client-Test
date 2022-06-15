@@ -45,6 +45,9 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene("Level1");
 
         player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, new Vector3(0,1,0) , Quaternion.identity).GetComponent<Player>();
+
+        UIManager.Singleton.loadPlayer(player.gameObject);
+
         player.isLocal = true;
 
         DontDestroyOnLoad(player);

@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
     public void loadPlayer(GameObject player)
     {
 
-        Debug.Log(player.transform);
+        //Debug.Log(player.transform);
 
         if (player != null)
         {
@@ -60,9 +60,6 @@ public class UIManager : MonoBehaviour
 
 
     #region pausemenu
-
-
-
 
     public void showPauseMenu()
     {

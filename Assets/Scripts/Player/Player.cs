@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
 
     [SerializeField] private Target target;
-    [SerializeField] private Camera cam;
+    [SerializeField] private GameObject cam;
     [SerializeField] private ShootGun gun;
 
 
@@ -90,9 +90,15 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerPositions)]
     private static void updateOtherPlayerPositions(Message message)
     {
-        Debug.Log("Recieved player positons");
 
-        Player player = list[message.GetUShort()];
+
+        ushort idee = message.GetUShort();
+
+
+        Debug.Log("Recieved player positons, id: " + idee);
+        Debug.Log(Player.list.ToString());
+
+        Player player = list[idee];
         
         player.movePlayer(message.GetVector3());
         player.changeCamRotation(message.GetQuaternion());

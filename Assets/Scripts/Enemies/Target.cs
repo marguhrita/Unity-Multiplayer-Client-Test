@@ -19,7 +19,8 @@ public abstract class Target : MonoBehaviour
 
     public virtual void takeDamage(float damage)
     {
-        
+        Debug.Log("Sending damage message");
+
         Message message = Message.Create(MessageSendMode.reliable, ClientToServerId.damage);
 
         message.AddUShort(player.id);
