@@ -8,7 +8,7 @@ public class ShootGun : MonoBehaviour
 {
 
     [SerializeField] Player player;
-    [SerializeField] Camera cam;
+    [SerializeField] GameObject cam;
 
     [Header("Weapon Stats")]
     [SerializeField] private float damage = 10f;
@@ -133,7 +133,6 @@ public class ShootGun : MonoBehaviour
         Message message = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerId.playerShot);
 
         message.AddUShort(player.id);
-
 
         Singleton.Client.Send(message);
     }

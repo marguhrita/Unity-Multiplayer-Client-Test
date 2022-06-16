@@ -114,12 +114,15 @@ public class Player : MonoBehaviour
 
         Player player = list[message.GetUShort()];
 
-        player.target.health = message.GetFloat();
+        player.target.setHealth(message.GetFloat());
 
-        if (player.target.health < 0)
+        if (player.target.getHealth() < 0)
         {
             Debug.Log($"Player with id:{player.id} died");
         }
+
+
+
     }
 
 

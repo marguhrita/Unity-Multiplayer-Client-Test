@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 7550535787848369667}
   - component: {fileID: 1781771233485586921}
   - component: {fileID: 6103753632277436185}
+  - component: {fileID: 7906250451397121394}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -179,3 +180,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   speed: 0
+--- !u!114 &7906250451397121394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081205169731456759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9826709e2dda4d646abf8e0595b48172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1781771233485586921}
+  cam: {fileID: 5115818128177731370}
+  damage: 10
+  fireRate: 10
+  cooldown: 0.1
+  BulletTrail: {fileID: 0}
+  BulletSpawnPoint: {fileID: 0}
+  ImpactParticleSystem: {fileID: 0}
+  BulletSpeed: 100

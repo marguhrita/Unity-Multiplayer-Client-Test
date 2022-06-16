@@ -46,7 +46,7 @@ public class MainMenuManager : MonoBehaviour
 
         player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, new Vector3(0,1,0) , Quaternion.identity).GetComponent<Player>();
 
-        UIManager.Singleton.loadPlayer(player.gameObject);
+        //UIManager.Singleton.loadPlayer(player.gameObject);
 
         player.isLocal = true;
 
@@ -93,6 +93,7 @@ public class MainMenuManager : MonoBehaviour
         message.AddString(username.text);
 
         Debug.Log("Sending name");
+
         NetworkManager.Singleton.Client.Send(message);
     }
 
