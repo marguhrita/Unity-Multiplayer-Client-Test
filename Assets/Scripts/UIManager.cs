@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     private PlayerMovement playerMovement;
     private PlayerCamera playerCamera;
+    private ShootGun playerShooting;
 
     [Header("Pause")]
     [SerializeField] private GameObject pauseMenu;
@@ -43,7 +44,7 @@ public class UIManager : MonoBehaviour
     [Header("Death")]
     [SerializeField] private GameObject deathMenu;
 
-    
+   
 
     public void loadPlayer(GameObject player)
     {
@@ -54,6 +55,7 @@ public class UIManager : MonoBehaviour
         {
             playerMovement = player.GetComponent<PlayerMovement>();
             playerCamera = player.GetComponent<PlayerCamera>();
+            playerShooting = player.GetComponent<ShootGun>();
         }
 
     }
@@ -63,21 +65,33 @@ public class UIManager : MonoBehaviour
 
     public void showPauseMenu()
     {
-        Debug.Log("Showing pause menu");
-        playerMovement.enabled = false;
-        playerCamera.enableCursor();
-        playerCamera.enabled = false;
-        pauseMenu.SetActive(true);
+
+        if (!pauseMenu.activeSelf)
+        {
+            Debug.Log("Showing pause menu");
+            playerMovement.enabled = false;
+            playerCamera.enableCursor();
+            playerCamera.enabled = false;
+            pauseMenu.SetActive(true);
+            playerShooting.enabled = false;
+        }
+
+        
         
     }
 
     public void hidePauseMenu()
     {
-        Debug.Log("hiding pause menu");
-        pauseMenu.SetActive(false);
-        playerMovement.enabled = true;
-        playerCamera.enabled = true;
-        playerCamera.disableCursor();
+        if (pauseMenu.activeSelf)
+        {
+            Debug.Log("hiding pause menu");
+            pauseMenu.SetActive(false);
+            playerMovement.enabled = true;
+            playerCamera.enabled = true;
+            playerCamera.disableCursor();
+            playerShooting.enabled = true;
+        }
+        
     }
 
     public void showDeathMenu()

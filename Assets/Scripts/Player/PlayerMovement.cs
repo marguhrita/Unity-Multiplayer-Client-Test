@@ -52,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
         //raycast to check if player is grounded
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
+        Debug.Log($"Grounded is currently {grounded}");
+
         if (grounded)
         {
             //Debug.Log(grounded);

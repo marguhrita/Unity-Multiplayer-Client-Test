@@ -31,6 +31,8 @@ public class MainMenuManager : MonoBehaviour
         Singleton = this;
     }
 
+    public bool isSingleplayer = false;
+
     [SerializeField] private GameObject startMenu;
     [SerializeField] private GameObject multiplayerMenu;
     [SerializeField] private GameObject networkManager;
@@ -39,19 +41,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private TMP_InputField ipField;
 
     public void loadSingleplayer()
-    {
-        Player player;
-        
+    { 
         SceneManager.LoadScene("Level1");
-
-        player = Instantiate(GameLogic.Singleton.LocalPlayerPrefab, new Vector3(0,1,0) , Quaternion.identity).GetComponent<Player>();
-
-        //UIManager.Singleton.loadPlayer(player.gameObject);
-
-        player.isLocal = true;
-
-        DontDestroyOnLoad(player);
-
+        isSingleplayer = true;
     }
 
     public void loadMultiplayerMenu()

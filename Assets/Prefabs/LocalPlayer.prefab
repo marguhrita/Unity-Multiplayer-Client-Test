@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1154817891}
   - component: {fileID: 1154817893}
   - component: {fileID: 1154817892}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 1842807648}
   - component: {fileID: 1842807647}
   - component: {fileID: 1842807646}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: GUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 1899646273}
   - component: {fileID: 1899646275}
   - component: {fileID: 1899646274}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 3743290138313915730}
   - component: {fileID: 3938269742754118255}
   - component: {fileID: 3703305269741663574}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6346407301173800964}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 8275581708429041814}
   - component: {fileID: 3163258752629875049}
   - component: {fileID: 6874644530912069933}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,11 +523,12 @@ GameObject:
   - component: {fileID: 1781771233485586921}
   - component: {fileID: 8459821057878367565}
   - component: {fileID: 6938073433587851916}
-  - component: {fileID: 4114294738042021840}
-  - component: {fileID: 4360563558048234443}
   - component: {fileID: 8220574921327707236}
   - component: {fileID: 332658399207395404}
-  m_Layer: 0
+  - component: {fileID: 5445004441600770850}
+  - component: {fileID: 4114294738042021840}
+  - component: {fileID: 4360563558048234443}
+  m_Layer: 8
   m_Name: LocalPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -581,7 +582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9826709e2dda4d646abf8e0595b48172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1781771233485586921}
   cam: {fileID: 3524763420930390805}
   damage: 10
   fireRate: 10
@@ -590,6 +590,9 @@ MonoBehaviour:
   BulletSpawnPoint: {fileID: 8275581708429041814}
   ImpactParticleSystem: {fileID: 3121400528888655713, guid: a0da67e18efc7274eb6027ee25f52b07, type: 3}
   BulletSpeed: 100
+  whatIsMap:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!114 &6938073433587851916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +617,50 @@ MonoBehaviour:
   readyToJump: 1
   orientation: {fileID: 6346407301173800964}
   cam: {fileID: 3163258752629875049}
+--- !u!114 &8220574921327707236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081205169731456759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c02415bfe81ac241a3d7d46e5ab8d4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 100
+  orientation: {fileID: 6346407301173800964}
+  cam: {fileID: 3163258752629875049}
+--- !u!114 &332658399207395404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081205169731456759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ed690a2b9498741b3a93b48c85ce1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthText: {fileID: 0}
+  health: 100
+  speed: 0
+--- !u!114 &5445004441600770850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081205169731456759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd021bf108e57c04996e3d319984f2b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  deathMenu: {fileID: 0}
 --- !u!54 &4114294738042021840
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -643,32 +690,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8220574921327707236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6081205169731456759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c02415bfe81ac241a3d7d46e5ab8d4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensitivity: 100
-  orientation: {fileID: 6346407301173800964}
-  cam: {fileID: 3163258752629875049}
---- !u!114 &332658399207395404
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6081205169731456759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ed690a2b9498741b3a93b48c85ce1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  speed: 0

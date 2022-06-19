@@ -7,7 +7,7 @@ using static NetworkManager;
 public class ShootGun : MonoBehaviour
 {
 
-    [SerializeField] Player player;
+    Player player;
     [SerializeField] GameObject cam;
 
     [Header("Weapon Stats")]
@@ -20,6 +20,8 @@ public class ShootGun : MonoBehaviour
     [SerializeField] private Transform BulletSpawnPoint;
     [SerializeField] private ParticleSystem ImpactParticleSystem;
     [SerializeField] public float BulletSpeed = 100;
+    [SerializeField] private LayerMask whatIsMap;
+
     
 
 
@@ -34,74 +36,70 @@ public class ShootGun : MonoBehaviour
     {
         if (Input.GetButton("Fire1"))
         {
-            Shoot();
-            sendShootMessage();
+
+            if (!canShoot)
+            {
+                return;
+            }
+
+            if (player != null)
+            {
+                sendShootMessage();
+            }
+
+            Shoot(cam.transform, BulletSpawnPoint);
+
+            canShoot = false;
+            Invoke("resetShootCooldown", cooldown);
         }
+
+
     }
 
 
-    void Shoot()
+    void Shoot(Transform viewTransform, Transform bulletOriginTransform)
     {
-
-        if (!canShoot)
-        {
-            return;
-        }
-
-        canShoot = false;
-
-        Invoke("resetShootCooldown", cooldown);
-
-
+       
         RaycastHit hit;
 
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit,1 << ~gameObject.layer)) //Performs raycast on camera direction and outputs to "hit"
+        if (Physics.Raycast(viewTransform.position, viewTransform.forward, out hit,whatIsMap)) //Performs raycast on camera direction and outputs to "hit"
         {
 
-            damageTarget(hit);
+            Debug.Log("Hit object");
 
-            TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
+            damageTarget(hit);//need to check this
+
+            TrailRenderer trail = Instantiate(BulletTrail, bulletOriginTransform.position, Quaternion.identity);
 
             StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
-
 
         }
         else
         {
-            TrailRenderer trail = Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
+            TrailRenderer trail = Instantiate(BulletTrail, bulletOriginTransform.position, Quaternion.identity);
 
-            StartCoroutine(SpawnTrail(trail, cam.transform.forward * 100, Vector3.zero, false));
+            StartCoroutine(SpawnTrail(trail, viewTransform.forward * 100, Vector3.zero, false));
 
         }
-
     }
 
-    void resetShootCooldown()
+    public void createTrail(Transform startTransform, Vector3 endPoint)
     {
-        canShoot = true;
-    }
+        
 
-    private void damageTarget(RaycastHit hit)
-    {
-        Target target = hit.transform.GetComponent<Target>();
+        TrailRenderer trail = Instantiate(BulletTrail, startTransform.position, Quaternion.identity);
 
-        if (target != null)
-        {
-            target.takeDamage(damage);
-        }
 
-    }
+        StartCoroutine(SpawnTrail(trail, startTransform.forward, Vector3.zero, true));
 
-    public TrailRenderer getTrail()
-    {
-        return Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
+
     }
 
 
     //Magic code that creates a trail from the spawn position to the impact point
     public IEnumerator SpawnTrail(TrailRenderer Trail, Vector3 HitPoint, Vector3 HitNormal, bool MadeImpact)
     {
-        
+
         Vector3 startPosition = Trail.transform.position;
         float distance = Vector3.Distance(Trail.transform.position, HitPoint);//distance between where the trail was instantiated and where the 
         float remainingDistance = distance;
@@ -127,6 +125,31 @@ public class ShootGun : MonoBehaviour
 
         Destroy(Trail.gameObject, Trail.time);
     }
+
+
+    void resetShootCooldown()
+    {
+        canShoot = true;
+    }
+
+    private void damageTarget(RaycastHit hit)
+    {
+        Target target = hit.transform.GetComponent<Target>();
+
+        if (target != null)
+        {
+            target.takeDamage(damage);
+        }
+
+    }
+
+    public TrailRenderer getTrail()
+    {
+        return Instantiate(BulletTrail, BulletSpawnPoint.position, Quaternion.identity);
+    }
+
+
+    
 
     public void sendShootMessage()
     {

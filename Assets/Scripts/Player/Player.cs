@@ -24,7 +24,10 @@ public class Player : MonoBehaviour
         gun = GetComponent<ShootGun>();
         
     }
-
+    private void Update()
+    {
+        //gun.createTrail(cam.transform, new Vector3(0, 8, 0));
+    }
     private void OnDestroy()
     {
         list.Remove(id);
@@ -91,7 +94,6 @@ public class Player : MonoBehaviour
     private static void updateOtherPlayerPositions(Message message)
     {
 
-
         ushort idee = message.GetUShort();
 
 
@@ -100,8 +102,8 @@ public class Player : MonoBehaviour
 
         Player player = list[idee];
         
-        player.movePlayer(message.GetVector3());
-        player.changeCamRotation(message.GetQuaternion());
+        //player.movePlayer(message.GetVector3());
+        //player.changeCamRotation(message.GetQuaternion());
     }
 
     
