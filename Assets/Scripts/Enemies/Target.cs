@@ -16,7 +16,7 @@ public abstract class Target : MonoBehaviour
     
 
 
-    private Player player;
+    public Player player;
     
 
     protected virtual void Start()
@@ -27,8 +27,15 @@ public abstract class Target : MonoBehaviour
 
     public virtual void setHealth(float health)
     {
-        healthText.text = health.ToString();
+        //Debug.Log("Setting health to " + health);
 
+
+        if (healthText!= null)
+        {
+            healthText.text = health.ToString();
+        }
+        
+        
         this.health = health;
     }
 
@@ -47,7 +54,7 @@ public abstract class Target : MonoBehaviour
 
         message.AddFloat(damage);
 
-        Singleton.Client.Send(message);
+        NetworkManager.Singleton.Client.Send(message);
 
     }
 }

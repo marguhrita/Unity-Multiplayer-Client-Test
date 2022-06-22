@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         player.id = id;
         player.username = username;
 
+        Debug.Log($"Adding player with id {id} to dictionary");
         list.Add(id, player);
     }
 
@@ -86,7 +87,11 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerSpawned)]
     private static void spawnPlayer(Message message)
     {
-        Spawn(message.GetUShort(), message.GetString(), message.GetVector3());
+        ushort playerID = message.GetUShort();
+
+        Debug.Log($"Player with id: {playerID} recieved from server");
+
+        Spawn(playerID, message.GetString(), message.GetVector3());
     }
 
 
@@ -94,16 +99,12 @@ public class Player : MonoBehaviour
     private static void updateOtherPlayerPositions(Message message)
     {
 
-        ushort idee = message.GetUShort();
 
-
-        Debug.Log("Recieved player positons, id: " + idee);
-        Debug.Log(Player.list.ToString());
-
-        Player player = list[idee];
-        
-        //player.movePlayer(message.GetVector3());
-        //player.changeCamRotation(message.GetQuaternion());
+        if (list.TryGetValue(message.GetUShort(), out Player player))
+        {
+            player.movePlayer(message.GetVector3());
+            player.changeCamRotation(message.GetQuaternion());
+        } 
     }
 
     
@@ -111,19 +112,17 @@ public class Player : MonoBehaviour
     private static void playerHealthMessage(Message message)
     {
 
-        Debug.Log("Recieved player health");
+        Debug.Log("Recieved player healths");
 
-
-        Player player = list[message.GetUShort()];
-
-        player.target.setHealth(message.GetFloat());
-
-        if (player.target.getHealth() < 0)
+        if (list.TryGetValue(message.GetUShort(), out Player player))
         {
-            Debug.Log($"Player with id:{player.id} died");
+            player.target.setHealth(message.GetFloat());
+
+            if (player.target.getHealth() < 0)
+            {
+                Debug.Log($"Player with id:{player.id} died");
+            }
         }
-
-
 
     }
 
@@ -131,12 +130,17 @@ public class Player : MonoBehaviour
     [MessageHandler((ushort)ServerToClientId.playerShot)]
     private static void recievePlayerShot(Message message)
     {
-        Player player = list[message.GetUShort()];
 
-        Vector3 hit = message.GetVector3();
+        if (list.TryGetValue(message.GetUShort(), out Player player))
+        {
+            Vector3 hit = message.GetVector3();
 
-        player.gun.SpawnTrail(player.gun.getTrail(), hit, hit.normalized, true);
-        Debug.Log("spawned other players gun trail");
+            player.gun.SpawnTrail(player.gun.getTrail(), hit, hit.normalized, true);
+            Debug.Log("spawned other players gun trail");
+        }
+            
+
+        
     }
     #endregion
 

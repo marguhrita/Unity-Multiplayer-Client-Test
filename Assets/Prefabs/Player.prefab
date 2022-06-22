@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3743290138313915730}
   - component: {fileID: 3938269742754118255}
   - component: {fileID: 3703305269741663574}
+  - component: {fileID: 82081716783259716}
+  - component: {fileID: 1486116865169624290}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -83,6 +85,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &82081716783259716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949788122868838267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04417b1d98ad5044ca39d3ff60bcd73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocal: 0
+  target: {fileID: 0}
+  cam: {fileID: 0}
+  gun: {fileID: 0}
+--- !u!136 &1486116865169624290
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949788122868838267}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5115818128177731370
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +139,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5115818128177731370}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -124,9 +156,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7550535787848369667}
   - component: {fileID: 7906250451397121394}
+  - component: {fileID: 3498222699913515421}
+  - component: {fileID: 8631395047260691377}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +198,42 @@ MonoBehaviour:
   damage: 10
   fireRate: 10
   cooldown: 0.1
-  BulletTrail: {fileID: 0}
-  BulletSpawnPoint: {fileID: 0}
-  ImpactParticleSystem: {fileID: 0}
+  BulletTrail: {fileID: 2152547122530672702, guid: e176e380e8b060e458b3e2739bb5884b, type: 3}
+  BulletSpawnPoint: {fileID: 7074550610176730161}
+  ImpactParticleSystem: {fileID: 3121400528888655713, guid: a0da67e18efc7274eb6027ee25f52b07, type: 3}
   BulletSpeed: 100
+  whatIsMap:
+    serializedVersion: 2
+    m_Bits: 192
+--- !u!114 &3498222699913515421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081205169731456759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04417b1d98ad5044ca39d3ff60bcd73e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isLocal: 0
+  target: {fileID: 8631395047260691377}
+  cam: {fileID: 5115818128177731370}
+  gun: {fileID: 7906250451397121394}
+--- !u!114 &8631395047260691377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081205169731456759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ed690a2b9498741b3a93b48c85ce1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthText: {fileID: 0}
+  health: 10
+  speed: 10
+  player: {fileID: 0}

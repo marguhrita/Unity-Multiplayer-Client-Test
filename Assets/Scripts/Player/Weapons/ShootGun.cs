@@ -9,6 +9,7 @@ public class ShootGun : MonoBehaviour
 
     Player player;
     [SerializeField] GameObject cam;
+    
 
     [Header("Weapon Stats")]
     [SerializeField] private float damage = 10f;
@@ -34,7 +35,7 @@ public class ShootGun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") & player.isLocal)
         {
 
             if (!canShoot)
@@ -42,10 +43,6 @@ public class ShootGun : MonoBehaviour
                 return;
             }
 
-            if (player != null)
-            {
-                sendShootMessage();
-            }
 
             Shoot(cam.transform, BulletSpawnPoint);
 
@@ -65,13 +62,22 @@ public class ShootGun : MonoBehaviour
         if (Physics.Raycast(viewTransform.position, viewTransform.forward, out hit,whatIsMap)) //Performs raycast on camera direction and outputs to "hit"
         {
 
-            Debug.Log("Hit object");
+            Debug.Log("Raycast hit object " + hit.transform.gameObject.name);
 
-            damageTarget(hit);//need to check this
+            if (hit.transform.gameObject.tag == "Player")
+            {
+                damageTarget(hit);//need to check this
+            }
+            
 
             TrailRenderer trail = Instantiate(BulletTrail, bulletOriginTransform.position, Quaternion.identity);
 
             StartCoroutine(SpawnTrail(trail, hit.point, hit.normal, true));
+
+            if (player.isLocal)
+            {
+                sendShootMessage(trail.transform.position, hit.point);
+            }
 
         }
         else
@@ -134,12 +140,12 @@ public class ShootGun : MonoBehaviour
 
     private void damageTarget(RaycastHit hit)
     {
-        Target target = hit.transform.GetComponent<Target>();
+        Target target = hit.transform.GetComponentInParent<Target>();
 
-        if (target != null)
-        {
-            target.takeDamage(damage);
-        }
+        Debug.Log($"Player with id {target.player.id} was shot!");
+
+        target.takeDamage(damage);
+        
 
     }
 
@@ -151,11 +157,17 @@ public class ShootGun : MonoBehaviour
 
     
 
-    public void sendShootMessage()
+    public void sendShootMessage(Vector3 startPosition, Vector3 hitPoint)
     {
         Message message = Message.Create(MessageSendMode.reliable, (ushort)ClientToServerId.playerShot);
 
         message.AddUShort(player.id);
+
+        message.AddVector3(hitPoint);
+        message.AddVector3(startPosition);
+        
+
+
 
         Singleton.Client.Send(message);
     }

@@ -129,12 +129,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Message message = Message.Create(MessageSendMode.unreliable, ClientToServerId.playerPosition);
 
-       // Debug.Log("Sending positions " + transform.position);
+        //Debug.Log("Sending positions " + transform.position);
 
         message.AddUShort(player.id);
         message.AddVector3(transform.position);
         message.AddVector3(cam.transform.position);
-        Singleton.Client.Send(message);
+        NetworkManager.Singleton.Client.Send(message);
 
 
     }
